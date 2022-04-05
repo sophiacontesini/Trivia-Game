@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { makeLoginAction, getTokenAction } from '../redux/actions';
 
 class Login extends React.Component {
   constructor() {
@@ -25,10 +28,24 @@ class Login extends React.Component {
      });
    }
 
+   login = async (e) => {
+     e.preventDefault();
+     const { name, email } = this.state;
+     const { makeFetch, makeLogin, history } = this.props;
+     const player = {
+       name,
+       gravatarEmail: email,
+     };
+
+     await makeFetch();
+     await makeLogin(player);
+     history.push('/play');
+   }
+
    render() {
      const { buttonDisabled, name, email } = this.state;
      return (
-       <form>
+       <form onSubmit={ this.login }>
          <label htmlFor="name">
            Nome do Jogador:
            <input
@@ -66,4 +83,15 @@ class Login extends React.Component {
    }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  makeFetch: () => dispatch(getTokenAction()),
+  makeLogin: (player) => dispatch(makeLoginAction(player)),
+});
+
+Login.propTypes = {
+  makeFetch: PropTypes.func.isRequired,
+  makeLogin: PropTypes.func.isRequired,
+  history: PropTypes.shape(PropTypes.any).isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
