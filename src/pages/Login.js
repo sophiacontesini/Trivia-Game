@@ -15,14 +15,13 @@ class Login extends React.Component {
      const { name, value } = target;
      this.setState({
        [name]: value,
-     });
-     this.isButtonDisabled();
+     }, this.isButtonDisabled);
    }
 
    isButtonDisabled = () => {
      const { name, email } = this.state;
      this.setState({
-       buttonDisabled: (name === '' && email === ''),
+       buttonDisabled: (name === '' || email === ''),
      });
    }
 
