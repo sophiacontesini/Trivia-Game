@@ -18,8 +18,8 @@ class Play extends React.Component {
 
     const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     const result = await response.json();
-    const TRES = 3;
-    if (result.response_code === TRES) {
+    const THREE = 3;
+    if (result.response_code === THREE) {
       this.updateToken();
     }
     this.setState({
@@ -60,6 +60,15 @@ class Play extends React.Component {
     return randomAnswers;
   }
 
+  changeQuestion = (index) => {
+    const FIVE = 5;
+    if (index < FIVE) {
+      this.setState((prevState) => ({
+        index: prevState.index + 1,
+      }));
+    }
+  }
+
   render() {
     const { questions, index } = this.state;
     return (
@@ -77,7 +86,13 @@ class Play extends React.Component {
                 { questions[index].type === 'multiple'
                 && this.mountQuestions(questions[index]) }
               </div>
-
+              <button
+                type="button"
+                data-testid="btn-next"
+                onClick={ () => this.changeQuestion(index) }
+              >
+                Next
+              </button>
             </div>
           )}
       </>
