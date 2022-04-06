@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Header from './pages/components/Header';
+import Play from './pages/Play';
 import './App.css';
 import Config from './pages/Config';
 import Login from './pages/Login';
@@ -13,7 +13,7 @@ export default function App() {
         path="/"
         render={ (props) => <Login { ...props } /> }
       />
-      <Route exact path="/play" component={ Header } />
+      <Route exact path="/play" component={ Play } />
       <Route exact path="/Config" component={ Config } />
     </Switch>
   );
