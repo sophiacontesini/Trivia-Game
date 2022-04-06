@@ -31,7 +31,8 @@ export function getTokenAction() {
   };
 }
 
-export const makeLoginAction = (payLoad) => ({
+export const makeLoginAction = (name, email) => ({
   type: LOGIN,
-  payLoad,
+  name,
+  email,
 });

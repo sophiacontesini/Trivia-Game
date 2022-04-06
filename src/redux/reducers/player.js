@@ -1,4 +1,4 @@
-export const LOGIN = 'LOGIN';
+import { LOGIN } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -12,7 +12,8 @@ const player = (state = INITIAL_STATE, action) => {
   case LOGIN: {
     return {
       ...state,
-      player: action.payLoad,
+      name: action.name,
+      gravatarEmail: action.email,
     };
   }
   default:
