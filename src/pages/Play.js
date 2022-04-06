@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import Header from './components/Header';
 import { getTokenAction } from '../redux/actions';
+import Header from './components/Header';
+import './components/play.css';
 
 class Play extends React.Component {
   constructor() {
@@ -10,6 +11,7 @@ class Play extends React.Component {
     this.state = {
       questions: [],
       index: 0,
+      borderColor: false,
     };
   }
 
@@ -29,11 +31,12 @@ class Play extends React.Component {
   }
 
   mountQuestions = (questions) => {
+    const { borderColor } = this.state;
     const arrayAnswers = questions.incorrect_answers.map((answers, indexAnswers) => (
       <button
         key={ indexAnswers }
         type="button"
-        name="alternative"
+        className={ borderColor && 'wrong-answer' }
         data-testid={ `wrong-answer-${indexAnswers}` }
       >
         { answers }
@@ -43,7 +46,7 @@ class Play extends React.Component {
       <button
         key={ arrayAnswers.length }
         type="button"
-        name="alternative"
+        className={ borderColor && 'correct-answer' }
         data-testid="correct-answer"
       >
         { questions.correct_answer }
