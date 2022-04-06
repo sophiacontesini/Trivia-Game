@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from './components/Header';
 import { getTokenAction } from '../redux/actions';
+import Timer from './components/Timer';
 
 class Play extends React.Component {
   constructor() {
@@ -10,12 +11,15 @@ class Play extends React.Component {
     this.state = {
       questions: [],
       index: 0,
+      timer: {
+        id: 0,
+        time: 0,
+      },
     };
   }
 
   componentDidMount = async () => {
     const { token } = this.props;
-
     const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     const result = await response.json();
     const TRES = 3;
@@ -25,6 +29,35 @@ class Play extends React.Component {
     this.setState({
       questions: result.results,
       index: 0,
+    });
+    this.enableTimer();
+  }
+
+  enableTimer = () => {
+    const oneSecond = 1000;
+    const id = setInterval(this.changeTime, oneSecond);
+    this.setState({
+      timer: {
+        id,
+        time: 30,
+      },
+    });
+  }
+
+  disableTimer = () => {
+    const { timer: { id } } = this.state;
+    window.clearInterval(id);
+  }
+
+  changeTime = () => {
+    this.setState(({ timer }) => ({
+      timer: {
+        ...timer,
+        time: (timer.time - 1),
+      },
+    }), () => {
+      const { timer: { time } } = this.state;
+      if (time === 0) this.disableTimer();
     });
   }
 
@@ -61,10 +94,11 @@ class Play extends React.Component {
   }
 
   render() {
-    const { questions, index } = this.state;
+    const { questions, index, timer: { time } } = this.state;
     return (
       <>
         <Header />
+        <Timer time={ time } />
         { questions[index] !== undefined
           && (
             <div>
