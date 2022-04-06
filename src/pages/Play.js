@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Header from './components/Header';
 import { getTokenAction, updateScoreboardAction } from '../redux/actions';
 import './components/play.css';
+import Timer from './components/Timer';
 
 const ZERO = 0;
 const UM = 1;
@@ -18,12 +19,15 @@ class Play extends React.Component {
       questions: [],
       index: 0,
       borderColor: false,
+      timer: {
+        id: 0,
+        time: 0,
+      },
     };
   }
 
   componentDidMount = async () => {
     const { token } = this.props;
-
     const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     const result = await response.json();
 
@@ -33,6 +37,35 @@ class Play extends React.Component {
     this.setState({
       questions: result.results,
       index: 0,
+    });
+    this.enableTimer();
+  }
+
+  enableTimer = () => {
+    const oneSecond = 1000;
+    const id = setInterval(this.changeTime, oneSecond);
+    this.setState({
+      timer: {
+        id,
+        time: 30,
+      },
+    });
+  }
+
+  disableTimer = () => {
+    const { timer: { id } } = this.state;
+    window.clearInterval(id);
+  }
+
+  changeTime = () => {
+    this.setState(({ timer }) => ({
+      timer: {
+        ...timer,
+        time: (timer.time - 1),
+      },
+    }), () => {
+      const { timer: { time } } = this.state;
+      if (time === 0) this.disableTimer();
     });
   }
 
@@ -86,19 +119,22 @@ class Play extends React.Component {
     });
     const score = DEZ + (timer.time * difficultyValue);
     this.updateScoreboard(score);
+    this.disableTimer();
   }
 
   wrongAnswer = () => {
     this.setState({
       borderColor: true,
     });
+    this.disableTimer();
   }
 
   render() {
-    const { questions, index } = this.state;
+    const { questions, index, timer: { time } } = this.state;
     return (
       <>
         <Header />
+        <Timer time={ time } />
         { questions[index] !== undefined
           && (
             <div>
