@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { savePlayerInfos } from '../redux/actions';
+import { makeLoginAction, getTokenAction } from '../redux/actions';
 
 class Login extends React.Component {
   constructor() {
@@ -22,14 +22,6 @@ class Login extends React.Component {
     }, this.isButtonDisabled);
   }
 
-   handleClick = (event) => {
-     event.preventDefault();
-     const { name, email } = this.state;
-     const { history, playerInfos } = this.props;
-     playerInfos(name, email);
-     history.push('/game');
-   }
-
    isButtonDisabled = () => {
      const { name, email } = this.state;
      this.setState({
@@ -37,10 +29,20 @@ class Login extends React.Component {
      });
    }
 
+   login = async (e) => {
+     e.preventDefault();
+     const { name, email } = this.state;
+     const { makeFetch, makeLogin, history } = this.props;
+
+     await makeFetch();
+     await makeLogin(name, email);
+     history.push('/play');
+   }
+
    render() {
      const { buttonDisabled, name, email } = this.state;
      return (
-       <form>
+       <form onSubmit={ this.login }>
          <label htmlFor="name">
            Nome do Jogador:
            <input
@@ -52,7 +54,6 @@ class Login extends React.Component {
              onChange={ this.handleChange }
            />
          </label>
-
          <label htmlFor="email">
            Email do Gravatar:
            <input
@@ -67,7 +68,6 @@ class Login extends React.Component {
          <button
            type="submit"
            data-testid="btn-play"
-           onClick={ this.handleClick }
            disabled={ buttonDisabled }
          >
            Play
@@ -87,11 +87,14 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  playerInfos: (name, email) => dispatch(savePlayerInfos(name, email)),
+  makeFetch: () => dispatch(getTokenAction()),
+  makeLogin: (name, email) => dispatch(makeLoginAction(name, email)),
 });
 
 Login.propTypes = {
-  playerInfos: PropTypes.func.isRequired,
+  makeFetch: PropTypes.func.isRequired,
+  makeLogin: PropTypes.func.isRequired,
+  history: PropTypes.shape(PropTypes.any).isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);

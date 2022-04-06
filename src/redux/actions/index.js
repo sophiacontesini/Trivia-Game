@@ -1,7 +1,38 @@
-export const PLAYER_INFOS = 'PLAYER_INFOS';
+export const REQUEST_TOKEN = 'REQUEST_TOKEN';
+export const SAVE_TOKEN = 'SAVE_TOKEN';
+export const REQUEST_FAILED = 'SAVE_TOKEN';
+export const LOGIN = 'LOGIN';
 
-export const savePlayerInfos = (name, email) => ({
-  type: PLAYER_INFOS,
+const requestToken = () => ({
+  type: REQUEST_TOKEN,
+});
+
+const saveToken = (payLoad) => ({
+  type: SAVE_TOKEN,
+  payLoad,
+});
+
+const requestFailed = (payLoad) => ({
+  type: REQUEST_FAILED,
+  payLoad,
+});
+
+export function getTokenAction() {
+  return async (dispatch) => {
+    dispatch(requestToken);
+    try {
+      const response = await fetch('https://opentdb.com/api_token.php?command=request');
+      const result = await response.json();
+      console.log(result);
+      dispatch(saveToken(result));
+    } catch (error) {
+      dispatch(requestFailed(error));
+    }
+  };
+}
+
+export const makeLoginAction = (name, email) => ({
+  type: LOGIN,
   name,
   email,
 });

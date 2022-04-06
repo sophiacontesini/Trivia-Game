@@ -13,7 +13,7 @@ export default function App() {
         path="/"
         render={ (props) => <Login { ...props } /> }
       />
-      <Route exact path="/game" component={ Header } />
+      <Route exact path="/play" component={ Header } />
       <Route exact path="/Config" component={ Config } />
     </Switch>
   );
