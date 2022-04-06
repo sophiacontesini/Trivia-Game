@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { makeLoginAction, getTokenAction } from '../redux/actions';
 
 class Login extends React.Component {
@@ -14,19 +15,12 @@ class Login extends React.Component {
     };
   }
 
-   handleChange = ({ target }) => {
-     const { name, value } = target;
-     this.setState({
-       [name]: value,
-     }, this.isButtonDisabled);
-   }
-
-   isButtonDisabled = () => {
-     const { name, email } = this.state;
-     this.setState({
-       buttonDisabled: (name === '' || email === ''),
-     });
-   }
+  handleChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    }, this.isButtonDisabled);
+  }
 
    login = async (e) => {
      e.preventDefault();
@@ -42,45 +36,60 @@ class Login extends React.Component {
      history.push('/play');
    }
 
-   render() {
-     const { buttonDisabled, name, email } = this.state;
-     return (
-       <form onSubmit={ this.login }>
-         <label htmlFor="name">
-           Nome do Jogador:
-           <input
-             type="text"
-             id="name"
-             name="name"
-             value={ name }
-             data-testid="input-player-name"
-             onChange={ this.handleChange }
-           />
-         </label>
+  isButtonDisabled = () => {
+    const { name, email } = this.state;
+    this.setState({
+      buttonDisabled: (name === '' || email === ''),
+    });
+  }
 
-         <label htmlFor="email">
-           Email do Gravatar:
-           <input
-             type="email"
-             id="email"
-             name="email"
-             value={ email }
-             data-testid="input-gravatar-email"
-             onChange={ this.handleChange }
-           />
-         </label>
-         <button
-           type="submit"
-           data-testid="btn-play"
-           disabled={ buttonDisabled }
-         >
-           Play
+  render() {
+    const { buttonDisabled, name, email } = this.state;
+    return (
+      <form onSubmit={ this.login }>
+        <label htmlFor="name">
+          Nome do Jogador:
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={ name }
+            data-testid="input-player-name"
+            onChange={ this.handleChange }
+          />
+        </label>
 
-         </button>
-       </form>
+        <label htmlFor="email">
+          Email do Gravatar:
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={ email }
+            data-testid="input-gravatar-email"
+            onChange={ this.handleChange }
+          />
+        </label>
+        <button
+          type="submit"
+          data-testid="btn-play"
+          disabled={ buttonDisabled }
+        >
+          Play
 
-     );
-   }
+        </button>
+        <Link to="/Config">
+          <button
+            type="button"
+            data-testid="btn-settings"
+          >
+            {' '}
+            Configurações
+          </button>
+        </Link>
+      </form>
+    );
+  }
 }
 
 const mapDispatchToProps = (dispatch) => ({
