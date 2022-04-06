@@ -7,10 +7,11 @@ import './components/play.css';
 import Timer from './components/Timer';
 
 const ZERO = 0;
-const UM = 1;
-const DOIS = 2;
-const TRES = 3;
-const DEZ = 10;
+const ONE = 1;
+const TWO = 2;
+const THREE = 3;
+const FIVE = 5;
+const TEN = 10;
 
 class Play extends React.Component {
   constructor() {
@@ -31,7 +32,7 @@ class Play extends React.Component {
     const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     const result = await response.json();
 
-    if (result.response_code === TRES) {
+    if (result.response_code === THREE) {
       this.updateToken();
     }
     this.setState({
@@ -108,16 +109,16 @@ class Play extends React.Component {
     const { timer } = this.state;
     let difficultyValue = ZERO;
     if (difficulty === 'hard') {
-      difficultyValue = TRES;
+      difficultyValue = THREE;
     } else if (difficulty === 'medium') {
-      difficultyValue = DOIS;
+      difficultyValue = TWO;
     } else if (difficulty === 'easy') {
-      difficultyValue = UM;
+      difficultyValue = ONE;
     }
     this.setState({
       borderColor: true,
     });
-    const score = DEZ + (timer.time * difficultyValue);
+    const score = TEN + (timer.time * difficultyValue);
     this.updateScoreboard(score);
     this.disableTimer();
   }
@@ -127,6 +128,14 @@ class Play extends React.Component {
       borderColor: true,
     });
     this.disableTimer();
+  }
+
+  changeQuestion = (index) => {
+    if (index < FIVE) {
+      this.setState((prevState) => ({
+        index: prevState.index + 1,
+      }));
+    }
   }
 
   render() {
@@ -147,7 +156,13 @@ class Play extends React.Component {
                 { questions[index].type === 'multiple'
                 && this.mountQuestions(questions[index]) }
               </div>
-
+              <button
+                type="button"
+                data-testid="btn-next"
+                onClick={ () => this.changeQuestion(index) }
+              >
+                Next
+              </button>
             </div>
           )}
       </>
