@@ -1,8 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Login from './pages/Login';
 import Header from './pages/components/Header';
 import './App.css';
+import Config from './pages/Config';
+import Login from './pages/Login';
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         render={ (props) => <Login { ...props } /> }
       />
       <Route exact path="/game" component={ Header } />
+      <Route exact path="/Config" component={ Config } />
     </Switch>
   );
 }

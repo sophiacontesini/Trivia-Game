@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { savePlayerInfos } from '../redux/actions';
 
@@ -14,19 +15,12 @@ class Login extends React.Component {
     };
   }
 
-   handleChange = ({ target }) => {
-     const { name, value } = target;
-     this.setState({
-       [name]: value,
-     }, this.isButtonDisabled);
-   }
-
-   isButtonDisabled = () => {
-     const { name, email } = this.state;
-     this.setState({
-       buttonDisabled: (name === '' || email === ''),
-     });
-   }
+  handleChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    }, this.isButtonDisabled);
+  }
 
    handleClick = (event) => {
      event.preventDefault();
@@ -34,6 +28,13 @@ class Login extends React.Component {
      const { history, playerInfos } = this.props;
      playerInfos(name, email);
      history.push('/game');
+   }
+
+   isButtonDisabled = () => {
+     const { name, email } = this.state;
+     this.setState({
+       buttonDisabled: (name === '' || email === ''),
+     });
    }
 
    render() {
@@ -70,10 +71,17 @@ class Login extends React.Component {
            disabled={ buttonDisabled }
          >
            Play
-
          </button>
+         <Link to="/Config">
+           <button
+             type="button"
+             data-testid="btn-settings"
+           >
+             {' '}
+             Configurações
+           </button>
+         </Link>
        </form>
-
      );
    }
 }
