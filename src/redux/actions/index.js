@@ -2,6 +2,7 @@ export const REQUEST_TOKEN = 'REQUEST_TOKEN';
 export const SAVE_TOKEN = 'SAVE_TOKEN';
 export const REQUEST_FAILED = 'SAVE_TOKEN';
 export const LOGIN = 'LOGIN';
+export const UPDATE_SCORE = 'UPDATE_SCORE';
 
 const requestToken = () => ({
   type: REQUEST_TOKEN,
@@ -34,4 +35,9 @@ export const makeLoginAction = (name, email) => ({
   type: LOGIN,
   name,
   email,
+});
+
+export const updateScoreboardAction = (score) => ({
+  type: UPDATE_SCORE,
+  score,
 });

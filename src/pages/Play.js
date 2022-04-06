@@ -2,7 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from './components/Header';
-import { getTokenAction } from '../redux/actions';
+import { getTokenAction, updateScoreboardAction } from '../redux/actions';
+
+const ZERO = 0;
+const UM = 1;
+const DOIS = 2;
+const TRES = 3;
+const DEZ = 10;
 
 class Play extends React.Component {
   constructor() {
@@ -18,7 +24,7 @@ class Play extends React.Component {
 
     const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     const result = await response.json();
-    const TRES = 3;
+
     if (result.response_code === TRES) {
       this.updateToken();
     }
@@ -45,6 +51,7 @@ class Play extends React.Component {
         type="button"
         name="alternative"
         data-testid="correct-answer"
+        onClick={ () => this.answerHight(questions.difficulty) }
       >
         { questions.correct_answer }
       </button>,
@@ -58,6 +65,23 @@ class Play extends React.Component {
       arrayAnswers.splice(randomIndex, 1);
     }
     return randomAnswers;
+  }
+
+  answerHight = (difficulty) => {
+    const { timer } = this.state;
+    let difficultyValue = ZERO;
+    if (difficulty === 'hard') {
+      difficultyValue = TRES;
+    } else if (difficulty === 'medium') {
+      difficultyValue = DOIS;
+    } else if (difficulty === 'easy') {
+      difficultyValue = UM;
+    }
+    this.setState({
+      borderColor: true,
+    });
+    const score = DEZ + (timer.time * difficultyValue);
+    this.updateScoreboard(score);
   }
 
   render() {
@@ -91,6 +115,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   updateToken: () => dispatch(getTokenAction()),
+  updateScoreboard: (score) => dispatch(updateScoreboardAction(score)),
 });
 
 Play.propTypes = {
