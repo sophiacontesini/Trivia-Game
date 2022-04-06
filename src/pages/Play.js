@@ -15,50 +15,50 @@ class Play extends React.Component {
 
   componentDidMount = async () => {
     const { token } = this.props;
-    if (token.response_code === 0) {
-      this.updateToken();
-    }
+
     const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     const result = await response.json();
-
+    const TRES = 3;
+    if (result.response_code === TRES) {
+      this.updateToken();
+    }
     this.setState({
       questions: result.results,
       index: 0,
     });
   }
 
-  mountBooleanQuestions = () => (
-    <div>
-      <label htmlFor="true">
-        TRUE
-        <input type="radio" name="alternative" id="true" />
-      </label>
-
-      <label htmlFor="false">
-        FALSE
-        <input type="radio" name="alternative" id="false" />
-      </label>
-    </div>
-  )
-
-  mountMultipleQuestions = (questions) => (
-    <div data-testid="answer-options">
-      { questions.incorrect_answers.map((answers, indexAnswers) => (
-        <label htmlFor="alternative" key={ indexAnswers }>
-          { answers }
-          <input
-            type="radio"
-            name="alternative"
-            data-testid={ `wrong-answer-${indexAnswers}` }
-          />
-        </label>
-      )) }
-      <label htmlFor="alternative">
+  mountQuestions = (questions) => {
+    const arrayAnswers = questions.incorrect_answers.map((answers, indexAnswers) => (
+      <button
+        key={ indexAnswers }
+        type="button"
+        name="alternative"
+        data-testid={ `wrong-answer-${indexAnswers}` }
+      >
+        { answers }
+      </button>
+    ));
+    arrayAnswers.push(
+      <button
+        key={ arrayAnswers.length }
+        type="button"
+        name="alternative"
+        data-testid="correct-answer"
+      >
         { questions.correct_answer }
-        <input type="radio" name="alternative" data-testid="correct-answer" />
-      </label>
-    </div>
-  )
+      </button>,
+    );
+    const randomAnswers = [];
+
+    const index = () => Math.floor(Math.random() * arrayAnswers.length);
+    while (arrayAnswers.length > 0) {
+      const randomIndex = index();
+      randomAnswers.push(arrayAnswers[randomIndex]);
+      arrayAnswers.splice(randomIndex, 1);
+    }
+    return randomAnswers;
+  }
 
   render() {
     const { questions, index } = this.state;
@@ -70,11 +70,14 @@ class Play extends React.Component {
             <div>
               <p data-testid="question-category">{ questions[index].category}</p>
               <p data-testid="question-text">{ questions[index].question }</p>
+              <div data-testid="answer-options">
+                { questions[index].type === 'boolean'
+                && this.mountQuestions(questions[index]) }
 
-              { questions[index].type === 'boolean' && this.mountBooleanQuestions() }
+                { questions[index].type === 'multiple'
+                && this.mountQuestions(questions[index]) }
+              </div>
 
-              { questions[index].type === 'multiple'
-              && this.mountMultipleQuestions(questions[index]) }
             </div>
           )}
       </>
