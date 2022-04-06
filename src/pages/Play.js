@@ -22,7 +22,7 @@ class Play extends React.Component {
       questions: [],
       alternatives: [],
       currentIndex: 0,
-      borderColor: false,
+      isAnswered: false,
       timer: {
         id: 0,
         time: 0,
@@ -70,7 +70,10 @@ class Play extends React.Component {
       },
     }), () => {
       const { timer: { time } } = this.state;
-      if (time === 0) this.disableTimer();
+      if (time === 0) {
+        this.disableTimer();
+        this.wrongAnswer();
+      }
     });
   }
 
@@ -97,12 +100,13 @@ class Play extends React.Component {
   }
 
   mountQuestions = () => {
-    const { alternatives, borderColor } = this.state;
+    const { alternatives, isAnswered } = this.state;
     const arrayAnswers = alternatives.map(({ answer, isTheCorrect }, indexAnswers) => (
       <button
         key={ indexAnswers }
         type="button"
-        className={ borderColor ? isTheCorrect : null }
+        className={ isAnswered ? isTheCorrect : null }
+        disabled={ isAnswered }
         data-testid={
           isTheCorrect === WRONG_ANSWER
             ? `${WRONG_ANSWER}-${indexAnswers}`
@@ -128,7 +132,7 @@ class Play extends React.Component {
       difficultyValue = ONE;
     }
     this.setState({
-      borderColor: true,
+      isAnswered: true,
     });
     const score = TEN + (timer.time * difficultyValue);
     const { updateScoreboard } = this.props;
@@ -138,7 +142,7 @@ class Play extends React.Component {
 
   wrongAnswer = () => {
     this.setState({
-      borderColor: true,
+      isAnswered: true,
     });
     this.disableTimer();
   }
