@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import Header from './components/Header';
 import { getTokenAction, updateScoreboardAction } from '../redux/actions';
+import './components/play.css';
 
 const ZERO = 0;
 const UM = 1;
@@ -16,6 +17,7 @@ class Play extends React.Component {
     this.state = {
       questions: [],
       index: 0,
+      borderColor: false,
     };
   }
 
@@ -35,12 +37,14 @@ class Play extends React.Component {
   }
 
   mountQuestions = (questions) => {
+    const { borderColor } = this.state;
     const arrayAnswers = questions.incorrect_answers.map((answers, indexAnswers) => (
       <button
         key={ indexAnswers }
         type="button"
-        name="alternative"
+        className={ borderColor && 'wrong-answer' }
         data-testid={ `wrong-answer-${indexAnswers}` }
+        onClick={ this.wrongAnswer }
       >
         { answers }
       </button>
@@ -49,7 +53,7 @@ class Play extends React.Component {
       <button
         key={ arrayAnswers.length }
         type="button"
-        name="alternative"
+        className={ borderColor && 'correct-answer' }
         data-testid="correct-answer"
         onClick={ () => this.answerHight(questions.difficulty) }
       >
@@ -82,6 +86,12 @@ class Play extends React.Component {
     });
     const score = DEZ + (timer.time * difficultyValue);
     this.updateScoreboard(score);
+  }
+
+  wrongAnswer = () => {
+    this.setState({
+      borderColor: true,
+    });
   }
 
   render() {
