@@ -72,7 +72,7 @@ class Login extends React.Component {
          >
            Play
          </button>
-         <Link to="/Config">
+         <Link to="/config">
            <button
              type="button"
              data-testid="btn-settings"

@@ -4,6 +4,7 @@ import Play from './pages/Play';
 import './App.css';
 import Config from './pages/Config';
 import Login from './pages/Login';
+import Feedback from './pages/Feedback';
 
 export default function App() {
   return (
@@ -14,7 +15,8 @@ export default function App() {
         component={ Login }
       />
       <Route exact path="/play" component={ Play } />
-      <Route exact path="/Config" component={ Config } />
+      <Route path="/config" component={ Config } />
+      <Route path="/feedback" component={ Feedback } />
     </Switch>
   );
 }
