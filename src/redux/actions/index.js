@@ -23,7 +23,6 @@ export function getTokenAction() {
     try {
       const response = await fetch('https://opentdb.com/api_token.php?command=request');
       const result = await response.json();
-      console.log(result);
       dispatch(saveToken(result));
     } catch (error) {
       dispatch(requestFailed(error));
