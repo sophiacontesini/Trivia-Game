@@ -12,13 +12,16 @@ const TWO = 2;
 const THREE = 3;
 const FIVE = 5;
 const TEN = 10;
+const WRONG_ANSWER = 'wrong-answer';
+const CORRECT_ANSWER = 'correct-answer';
 
 class Play extends React.Component {
   constructor() {
     super();
     this.state = {
       questions: [],
-      index: 0,
+      alternatives: [],
+      currentIndex: 0,
       borderColor: false,
       timer: {
         id: 0,
@@ -28,17 +31,18 @@ class Play extends React.Component {
   }
 
   componentDidMount = async () => {
-    const { token } = this.props;
+    const { token, updateToken } = this.props;
     const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     const result = await response.json();
 
     if (result.response_code === THREE) {
-      this.updateToken();
+      updateToken();
     }
     this.setState({
       questions: result.results,
       index: 0,
     });
+    this.mountRandomQuestions();
     this.enableTimer();
   }
 
@@ -70,42 +74,50 @@ class Play extends React.Component {
     });
   }
 
-  mountQuestions = (questions) => {
-    const { borderColor } = this.state;
-    const arrayAnswers = questions.incorrect_answers.map((answers, indexAnswers) => (
+  mountRandomQuestions = () => {
+    const { questions, currentIndex } = this.state;
+    const answers = questions[currentIndex].incorrect_answers.map((answer) => ({
+      answer,
+      isTheCorrect: WRONG_ANSWER,
+    }));
+    answers.push({
+      answer: questions[currentIndex].correct_answer,
+      isTheCorrect: CORRECT_ANSWER,
+    });
+    const randomAnswers = [];
+    const index = () => Math.floor(Math.random() * answers.length);
+    while (answers.length > 0) {
+      const randomIndex = index();
+      randomAnswers.push(answers[randomIndex]);
+      answers.splice(randomIndex, 1);
+    }
+    this.setState({
+      alternatives: randomAnswers,
+    });
+  }
+
+  mountQuestions = () => {
+    const { alternatives, borderColor } = this.state;
+    const arrayAnswers = alternatives.map(({ answer, isTheCorrect }, indexAnswers) => (
       <button
         key={ indexAnswers }
         type="button"
-        className={ borderColor && 'wrong-answer' }
-        data-testid={ `wrong-answer-${indexAnswers}` }
-        onClick={ this.wrongAnswer }
+        className={ borderColor ? isTheCorrect : null }
+        data-testid={
+          isTheCorrect === WRONG_ANSWER
+            ? `${WRONG_ANSWER}-${indexAnswers}`
+            : CORRECT_ANSWER
+        }
+        onClick={ isTheCorrect === WRONG_ANSWER ? this.wrongAnswer : this.rightAnswer }
       >
-        { answers }
+        { answer }
       </button>
     ));
-    arrayAnswers.push(
-      <button
-        key={ arrayAnswers.length }
-        type="button"
-        className={ borderColor && 'correct-answer' }
-        data-testid="correct-answer"
-        onClick={ () => this.answerHight(questions.difficulty) }
-      >
-        { questions.correct_answer }
-      </button>,
-    );
-    const randomAnswers = [];
 
-    const index = () => Math.floor(Math.random() * arrayAnswers.length);
-    while (arrayAnswers.length > 0) {
-      const randomIndex = index();
-      randomAnswers.push(arrayAnswers[randomIndex]);
-      arrayAnswers.splice(randomIndex, 1);
-    }
-    return randomAnswers;
+    return arrayAnswers;
   }
 
-  answerHight = (difficulty) => {
+  rightAnswer = (difficulty) => {
     const { timer } = this.state;
     let difficultyValue = ZERO;
     if (difficulty === 'hard') {
@@ -119,7 +131,8 @@ class Play extends React.Component {
       borderColor: true,
     });
     const score = TEN + (timer.time * difficultyValue);
-    this.updateScoreboard(score);
+    const { updateScoreboard } = this.props;
+    updateScoreboard(score);
     this.disableTimer();
   }
 
@@ -139,27 +152,23 @@ class Play extends React.Component {
   }
 
   render() {
-    const { questions, index, timer: { time } } = this.state;
+    const { questions, currentIndex, timer: { time } } = this.state;
     return (
       <>
         <Header />
         <Timer time={ time } />
-        { questions[index] !== undefined
+        { questions[currentIndex] !== undefined
           && (
             <div>
-              <p data-testid="question-category">{ questions[index].category}</p>
-              <p data-testid="question-text">{ questions[index].question }</p>
+              <p data-testid="question-category">{ questions[currentIndex].category}</p>
+              <p data-testid="question-text">{ questions[currentIndex].question }</p>
               <div data-testid="answer-options">
-                { questions[index].type === 'boolean'
-                && this.mountQuestions(questions[index]) }
-
-                { questions[index].type === 'multiple'
-                && this.mountQuestions(questions[index]) }
+                { this.mountQuestions() }
               </div>
               <button
                 type="button"
                 data-testid="btn-next"
-                onClick={ () => this.changeQuestion(index) }
+                onClick={ () => this.changeQuestion(currentIndex) }
               >
                 Next
               </button>
@@ -181,6 +190,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 Play.propTypes = {
   token: PropTypes.string.isRequired,
+  updateToken: PropTypes.func.isRequired,
+  updateScoreboard: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);

@@ -91,10 +91,14 @@ const mapDispatchToProps = (dispatch) => ({
   makeLogin: (name, email) => dispatch(makeLoginAction(name, email)),
 });
 
+Login.defaultProps = {
+  history: {},
+};
+
 Login.propTypes = {
   makeFetch: PropTypes.func.isRequired,
   makeLogin: PropTypes.func.isRequired,
-  history: PropTypes.shape(PropTypes.any).isRequired,
+  history: PropTypes.shape(PropTypes.any),
 };
 
 export default connect(null, mapDispatchToProps)(Login);

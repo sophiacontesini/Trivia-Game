@@ -11,7 +11,7 @@ export default function App() {
       <Route
         exact
         path="/"
-        render={ (props) => <Login { ...props } /> }
+        component={ Login }
       />
       <Route exact path="/play" component={ Play } />
       <Route exact path="/Config" component={ Config } />
