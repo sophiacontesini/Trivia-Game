@@ -3,7 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import Header from './components/Header';
-import { getTokenAction, updateScoreboardAction } from '../redux/actions';
+import { getTokenAction, resetScoreboardAction,
+  updateScoreboardAction } from '../redux/actions';
 import './components/play.css';
 import Timer from './components/Timer';
 
@@ -33,19 +34,28 @@ class Play extends React.Component {
   }
 
   componentDidMount = async () => {
-    const { token, updateToken } = this.props;
-    const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
-    const result = await response.json();
-
-    if (result.response_code === THREE) {
-      updateToken();
+    const { name, history } = this.props;
+    if (!name) {
+      history.push('/');
     }
-    this.setState({
-      questions: result.results,
-      currentIndex: 0,
-    });
-    this.mountRandomQuestions();
-    this.enableTimer();
+    const { token, updateToken, resetScoreboard } = this.props;
+    try {
+      const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
+      const result = await response.json();
+
+      if (result.response_code === THREE) {
+        updateToken();
+      }
+      this.setState({
+        questions: result.results,
+        currentIndex: 0,
+      });
+      resetScoreboard();
+      this.mountRandomQuestions();
+      this.enableTimer();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   enableTimer = () => {
@@ -123,8 +133,9 @@ class Play extends React.Component {
     return arrayAnswers;
   }
 
-  rightAnswer = (difficulty) => {
-    const { timer } = this.state;
+  rightAnswer = () => {
+    const { timer, questions, currentIndex } = this.state;
+    const { difficulty } = questions[currentIndex];
     let difficultyValue = ZERO;
     if (difficulty === 'hard') {
       difficultyValue = THREE;
@@ -133,9 +144,7 @@ class Play extends React.Component {
     } else if (difficulty === 'easy') {
       difficultyValue = ONE;
     }
-    this.setState({
-      isAnswered: true,
-    });
+    this.setState({ isAnswered: true });
     const score = TEN + (timer.time * difficultyValue);
     const { updateScoreboard } = this.props;
     updateScoreboard(score);
@@ -152,11 +161,11 @@ class Play extends React.Component {
   saveInLocalStore = () => {
     const { name, score, email } = this.props;
     const hash = md5(email).toString();
-    const players = JSON.parse(localStorage.getItem('players'));
+    const players = JSON.parse(localStorage.getItem('ranking'));
     if (players !== null) {
-      localStorage.setItem('players', JSON.stringify([players, { name, score, picture: `https://www.gravatar.com/avatar/${hash}` }]));
+      localStorage.setItem('ranking', JSON.stringify([...players, { name, score, picture: `https://www.gravatar.com/avatar/${hash}` }]));
     } else {
-      localStorage.setItem('players', JSON.stringify({ name, score, picture: `https://www.gravatar.com/avatar/${hash}` }));
+      localStorage.setItem('ranking', JSON.stringify([{ name, score, picture: `https://www.gravatar.com/avatar/${hash}` }]));
     }
   }
 
@@ -179,7 +188,6 @@ class Play extends React.Component {
 
   render() {
     const { questions, currentIndex, timer: { time }, isAnswered } = this.state;
-    console.log(questions);
     return (
       <>
         <Header />
@@ -219,6 +227,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   updateToken: () => dispatch(getTokenAction()),
   updateScoreboard: (score) => dispatch(updateScoreboardAction(score)),
+  resetScoreboard: () => dispatch(resetScoreboardAction()),
 });
 
 Play.defaultProps = {
@@ -229,6 +238,7 @@ Play.propTypes = {
   token: PropTypes.string.isRequired,
   updateToken: PropTypes.func.isRequired,
   updateScoreboard: PropTypes.func.isRequired,
+  resetScoreboard: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
