@@ -10,7 +10,7 @@ const ZERO = 0;
 const ONE = 1;
 const TWO = 2;
 const THREE = 3;
-const FUOR = 4;
+const FOUR = 4;
 const FIVE = 5;
 const TEN = 10;
 const WRONG_ANSWER = 'wrong-answer';
@@ -150,21 +150,20 @@ class Play extends React.Component {
 
   changeQuestion = (index) => {
     const { history } = this.props;
-    if (index === FUOR) {
+    if (index === FOUR) {
       history.push('/feedback');
     }
     if (index < FIVE) {
       this.setState((prevState) => ({
         currentIndex: prevState.currentIndex + 1,
         isAnswered: false,
-      }));
+      }), () => this.mountRandomQuestions());
     }
-    this.mountRandomQuestions();
   }
 
   render() {
     const { questions, currentIndex, timer: { time }, isAnswered } = this.state;
-    console.log(currentIndex);
+    console.log(questions);
     return (
       <>
         <Header />

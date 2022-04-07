@@ -42,36 +42,38 @@ class Login extends React.Component {
    render() {
      const { buttonDisabled, name, email } = this.state;
      return (
-       <form onSubmit={ this.login }>
-         <label htmlFor="name">
-           Nome do Jogador:
-           <input
-             type="text"
-             id="name"
-             name="name"
-             value={ name }
-             data-testid="input-player-name"
-             onChange={ this.handleChange }
-           />
-         </label>
-         <label htmlFor="email">
-           Email do Gravatar:
-           <input
-             type="email"
-             id="email"
-             name="email"
-             value={ email }
-             data-testid="input-gravatar-email"
-             onChange={ this.handleChange }
-           />
-         </label>
-         <button
-           type="submit"
-           data-testid="btn-play"
-           disabled={ buttonDisabled }
-         >
-           Play
-         </button>
+       <div>
+         <form onSubmit={ this.login }>
+           <label htmlFor="name">
+             Nome do Jogador:
+             <input
+               type="text"
+               id="name"
+               name="name"
+               value={ name }
+               data-testid="input-player-name"
+               onChange={ this.handleChange }
+             />
+           </label>
+           <label htmlFor="email">
+             Email do Gravatar:
+             <input
+               type="email"
+               id="email"
+               name="email"
+               value={ email }
+               data-testid="input-gravatar-email"
+               onChange={ this.handleChange }
+             />
+           </label>
+           <button
+             type="submit"
+             data-testid="btn-play"
+             disabled={ buttonDisabled }
+           >
+             Play
+           </button>
+         </form>
          <Link to="/config">
            <button
              type="button"
@@ -81,7 +83,7 @@ class Login extends React.Component {
              Configurações
            </button>
          </Link>
-       </form>
+       </div>
      );
    }
 }
