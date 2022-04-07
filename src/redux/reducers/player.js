@@ -1,4 +1,4 @@
-import { LOGIN } from '../actions';
+import { LOGIN, UPDATE_SCORE } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -14,6 +14,12 @@ const player = (state = INITIAL_STATE, action) => {
       ...state,
       name: action.name,
       gravatarEmail: action.email,
+    };
+  }
+  case UPDATE_SCORE: {
+    return {
+      ...state,
+      score: state.score + action.score,
     };
   }
   default:
