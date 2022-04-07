@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class Ranking extends Component {
   constructor() {
@@ -29,6 +30,9 @@ class Ranking extends Component {
             </li>
           )) }
         </ul>
+        <Link to="/">
+          <button type="button" data-testid="btn-go-home">Home</button>
+        </Link>
       </div>
     );
   }
