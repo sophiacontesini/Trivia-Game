@@ -22,7 +22,7 @@ class Play extends React.Component {
       questions: [],
       alternatives: [],
       currentIndex: 0,
-      borderColor: false,
+      isAnswered: false,
       timer: {
         id: 0,
         time: 0,
@@ -70,7 +70,10 @@ class Play extends React.Component {
       },
     }), () => {
       const { timer: { time } } = this.state;
-      if (time === 0) this.disableTimer();
+      if (time === 0) {
+        this.disableTimer();
+        this.wrongAnswer();
+      }
     });
   }
 
@@ -97,12 +100,13 @@ class Play extends React.Component {
   }
 
   mountQuestions = () => {
-    const { alternatives, borderColor } = this.state;
+    const { alternatives, isAnswered } = this.state;
     const arrayAnswers = alternatives.map(({ answer, isTheCorrect }, indexAnswers) => (
       <button
         key={ indexAnswers }
         type="button"
-        className={ borderColor ? isTheCorrect : null }
+        className={ isAnswered ? isTheCorrect : null }
+        disabled={ isAnswered }
         data-testid={
           isTheCorrect === WRONG_ANSWER
             ? `${WRONG_ANSWER}-${indexAnswers}`
@@ -128,7 +132,7 @@ class Play extends React.Component {
       difficultyValue = ONE;
     }
     this.setState({
-      borderColor: true,
+      isAnswered: true,
     });
     const score = TEN + (timer.time * difficultyValue);
     const { updateScoreboard } = this.props;
@@ -138,7 +142,7 @@ class Play extends React.Component {
 
   wrongAnswer = () => {
     this.setState({
-      borderColor: true,
+      isAnswered: true,
     });
     this.disableTimer();
   }
@@ -147,14 +151,14 @@ class Play extends React.Component {
     if (index < FIVE) {
       this.setState((prevState) => ({
         currentIndex: prevState.currentIndex + 1,
-        borderColor: false,
+        isAnswered: false,
       }));
     }
     this.mountRandomQuestions();
   }
 
   render() {
-    const { questions, currentIndex, timer: { time }, borderColor } = this.state;
+    const { questions, currentIndex, timer: { time }, isAnswered } = this.state;
     console.log(currentIndex);
     return (
       <>
@@ -168,7 +172,7 @@ class Play extends React.Component {
               <div data-testid="answer-options">
                 { this.mountQuestions() }
               </div>
-              { borderColor
+              { isAnswered
                 && (
                   <button
                     type="button"
