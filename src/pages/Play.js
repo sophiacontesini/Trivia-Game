@@ -40,7 +40,7 @@ class Play extends React.Component {
     }
     this.setState({
       questions: result.results,
-      index: 0,
+      currentIndex: 0,
     });
     this.mountRandomQuestions();
     this.enableTimer();
@@ -150,13 +150,16 @@ class Play extends React.Component {
   changeQuestion = (index) => {
     if (index < FIVE) {
       this.setState((prevState) => ({
-        index: prevState.index + 1,
+        currentIndex: prevState.currentIndex + 1,
+        borderColor: false,
       }));
     }
+    this.mountRandomQuestions();
   }
 
   render() {
-    const { questions, currentIndex, timer: { time } } = this.state;
+    const { questions, currentIndex, timer: { time }, borderColor } = this.state;
+    console.log(currentIndex);
     return (
       <>
         <Header />
@@ -169,13 +172,16 @@ class Play extends React.Component {
               <div data-testid="answer-options">
                 { this.mountQuestions() }
               </div>
-              <button
-                type="button"
-                data-testid="btn-next"
-                onClick={ () => this.changeQuestion(currentIndex) }
-              >
-                Next
-              </button>
+              { borderColor
+                && (
+                  <button
+                    type="button"
+                    data-testid="btn-next"
+                    onClick={ () => this.changeQuestion(currentIndex) }
+                  >
+                    Next
+                  </button>
+                )}
             </div>
           )}
       </>
