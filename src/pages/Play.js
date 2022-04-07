@@ -151,14 +151,14 @@ class Play extends React.Component {
     if (index < FIVE) {
       this.setState((prevState) => ({
         currentIndex: prevState.currentIndex + 1,
-        borderColor: false,
+        isAnswered: false,
       }));
     }
     this.mountRandomQuestions();
   }
 
   render() {
-    const { questions, currentIndex, timer: { time }, borderColor } = this.state;
+    const { questions, currentIndex, timer: { time }, isAnswered } = this.state;
     console.log(currentIndex);
     return (
       <>
@@ -172,7 +172,7 @@ class Play extends React.Component {
               <div data-testid="answer-options">
                 { this.mountQuestions() }
               </div>
-              { borderColor
+              { isAnswered
                 && (
                   <button
                     type="button"
