@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Header from './components/Header';
 
 const THREE = 3;
@@ -18,6 +19,14 @@ class Feedback extends Component {
             assertions >= THREE ? 'Well Done!' : 'Could be better...'
           }
         </p>
+        <Link to="/">
+          <button
+            type="button"
+            data-testid="btn-settings"
+          >
+            Play Again
+          </button>
+        </Link>
       </>
     );
   }
