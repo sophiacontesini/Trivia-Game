@@ -152,11 +152,11 @@ class Play extends React.Component {
   saveInLocalStore = () => {
     const { name, score, email } = this.props;
     const hash = md5(email).toString();
-    const players = JSON.parse(localStorage.getItem('players'));
+    const players = JSON.parse(localStorage.getItem('ranking'));
     if (players !== null) {
-      localStorage.setItem('players', JSON.stringify([players, { name, score, picture: `https://www.gravatar.com/avatar/${hash}` }]));
+      localStorage.setItem('ranking', JSON.stringify([...players, { name, score, picture: `https://www.gravatar.com/avatar/${hash}` }]));
     } else {
-      localStorage.setItem('players', JSON.stringify({ name, score, picture: `https://www.gravatar.com/avatar/${hash}` }));
+      localStorage.setItem('ranking', JSON.stringify([{ name, score, picture: `https://www.gravatar.com/avatar/${hash}` }]));
     }
   }
 

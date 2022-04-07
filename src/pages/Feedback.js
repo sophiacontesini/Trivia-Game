@@ -55,7 +55,7 @@ const mapStateToProps = (state) => ({
 });
 
 Feedback.propTypes = {
-  assertions: PropTypes.string.isRequired,
+  assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
 };
 
