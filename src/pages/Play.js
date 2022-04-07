@@ -170,7 +170,10 @@ class Play extends React.Component {
       this.setState((prevState) => ({
         currentIndex: prevState.currentIndex + 1,
         isAnswered: false,
-      }), () => this.mountRandomQuestions());
+      }), () => {
+        this.mountRandomQuestions();
+        this.enableTimer();
+      });
     }
   }
 
