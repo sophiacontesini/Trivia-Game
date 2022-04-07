@@ -10,6 +10,7 @@ const ZERO = 0;
 const ONE = 1;
 const TWO = 2;
 const THREE = 3;
+const FUOR = 4;
 const FIVE = 5;
 const TEN = 10;
 const WRONG_ANSWER = 'wrong-answer';
@@ -144,6 +145,10 @@ class Play extends React.Component {
   }
 
   changeQuestion = (index) => {
+    const { history } = this.props;
+    if (index === FUOR) {
+      history.push('/feedback');
+    }
     if (index < FIVE) {
       this.setState((prevState) => ({
         currentIndex: prevState.currentIndex + 1,
@@ -194,10 +199,15 @@ const mapDispatchToProps = (dispatch) => ({
   updateScoreboard: (score) => dispatch(updateScoreboardAction(score)),
 });
 
+Play.defaultProps = {
+  history: {},
+};
+
 Play.propTypes = {
   token: PropTypes.string.isRequired,
   updateToken: PropTypes.func.isRequired,
   updateScoreboard: PropTypes.func.isRequired,
+  history: PropTypes.shape(PropTypes.any),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);
