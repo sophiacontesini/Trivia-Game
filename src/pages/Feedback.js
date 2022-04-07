@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import Header from './components/Header';
 
-class Feedback extends React.Component {
+class Feedback extends Component {
   render() {
     return (
-      <p data-testid="feedback-text">seu feedback</p>
+      <>
+        <Header />
+        <h1 data-testid="feedback-text">Seu Feedback</h1>
+      </>
     );
   }
 }
 
-export default Feedback;
+export default connect()(Feedback);
