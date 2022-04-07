@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
 import Header from './components/Header';
 import { getTokenAction, updateScoreboardAction } from '../redux/actions';
 import './components/play.css';
@@ -148,9 +149,21 @@ class Play extends React.Component {
     this.disableTimer();
   }
 
+  saveInLocalStore = () => {
+    const { name, score, email } = this.props;
+    const hash = md5(email).toString();
+    const players = JSON.parse(localStorage.getItem('players'));
+    if (players !== null) {
+      localStorage.setItem('players', JSON.stringify([players, { name, score, picture: `https://www.gravatar.com/avatar/${hash}` }]));
+    } else {
+      localStorage.setItem('players', JSON.stringify({ name, score, picture: `https://www.gravatar.com/avatar/${hash}` }));
+    }
+  }
+
   changeQuestion = (index) => {
     const { history } = this.props;
     if (index === FOUR) {
+      this.saveInLocalStore();
       history.push('/feedback');
     }
     if (index < FIVE) {
@@ -195,6 +208,9 @@ class Play extends React.Component {
 
 const mapStateToProps = (state) => ({
   token: state.token,
+  name: state.player.name,
+  score: state.player.score,
+  email: state.player.gravatarEmail,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -210,6 +226,9 @@ Play.propTypes = {
   token: PropTypes.string.isRequired,
   updateToken: PropTypes.func.isRequired,
   updateScoreboard: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
   history: PropTypes.shape(PropTypes.any),
 };
 
