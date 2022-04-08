@@ -1,3 +1,9 @@
+.bg {
+  background-color: rgb(15, 83, 152);
+  
+}
+
+
 .correct-answer {
   border: 3px solid rgb(6, 240, 15);
 }
