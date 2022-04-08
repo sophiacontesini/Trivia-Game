@@ -4,6 +4,7 @@ export const REQUEST_FAILED = 'SAVE_TOKEN';
 export const LOGIN = 'LOGIN';
 export const UPDATE_SCORE = 'UPDATE_SCORE';
 export const RESET_SCORE = 'RESET_SCORE';
+export const UPDATE_CONFIG = 'UPDATE_CONFIG';
 
 const requestToken = () => ({
   type: REQUEST_TOKEN,
@@ -46,4 +47,9 @@ export const updateScoreboardAction = (score) => ({
 export const resetScoreboardAction = () => ({
   type: RESET_SCORE,
   score: 0,
+});
+
+export const updateConfigAction = (config) => ({
+  type: UPDATE_CONFIG,
+  config,
 });

@@ -100,7 +100,7 @@ Login.defaultProps = {
 Login.propTypes = {
   makeFetch: PropTypes.func.isRequired,
   makeLogin: PropTypes.func.isRequired,
-  history: PropTypes.shape(PropTypes.any),
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }),
 };
 
 export default connect(null, mapDispatchToProps)(Login);

@@ -5,7 +5,7 @@ import md5 from 'crypto-js/md5';
 import Header from './components/Header';
 import { getTokenAction, resetScoreboardAction,
   updateScoreboardAction } from '../redux/actions';
-import './components/play.css';
+import './styles/play.css';
 import Timer from './components/Timer';
 
 const ZERO = 0;
@@ -38,11 +38,14 @@ class Play extends React.Component {
     if (!name) {
       history.push('/');
     }
-    const { token, updateToken, resetScoreboard } = this.props;
+    const { token, updateToken, resetScoreboard, config } = this.props;
+    const { category, difficulty, type } = config;
     try {
-      const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
+      const parameters = (category ? `&category=${category}` : '')
+      + (difficulty ? `&difficulty=${difficulty}` : '')
+      + (type ? `&type=${type}` : '');
+      const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token + parameters}`);
       const result = await response.json();
-
       if (result.response_code === THREE) {
         updateToken();
       }
@@ -106,9 +109,7 @@ class Play extends React.Component {
       randomAnswers.push(answers[randomIndex]);
       answers.splice(randomIndex, 1);
     }
-    this.setState({
-      alternatives: randomAnswers,
-    });
+    this.setState({ alternatives: randomAnswers });
   }
 
   mountQuestions = () => {
@@ -152,9 +153,7 @@ class Play extends React.Component {
   }
 
   wrongAnswer = () => {
-    this.setState({
-      isAnswered: true,
-    });
+    this.setState({ isAnswered: true });
     this.disableTimer();
   }
 
@@ -222,6 +221,7 @@ const mapStateToProps = (state) => ({
   name: state.player.name,
   score: state.player.score,
   email: state.player.gravatarEmail,
+  config: state.config,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -229,10 +229,6 @@ const mapDispatchToProps = (dispatch) => ({
   updateScoreboard: (score) => dispatch(updateScoreboardAction(score)),
   resetScoreboard: () => dispatch(resetScoreboardAction()),
 });
-
-Play.defaultProps = {
-  history: {},
-};
 
 Play.propTypes = {
   token: PropTypes.string.isRequired,
@@ -242,7 +238,10 @@ Play.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
-  history: PropTypes.shape(PropTypes.any),
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+  config: PropTypes.shape(
+    { category: PropTypes.string, difficulty: PropTypes.string, type: PropTypes.string },
+  ).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);
