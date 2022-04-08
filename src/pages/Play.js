@@ -1,10 +1,12 @@
+import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import md5 from 'crypto-js/md5';
+import {
+  getTokenAction, resetScoreboardAction,
+  updateScoreboardAction
+} from '../redux/actions';
 import Header from './components/Header';
-import { getTokenAction, resetScoreboardAction,
-  updateScoreboardAction } from '../redux/actions';
 import './components/play.css';
 import Timer from './components/Timer';
 
@@ -195,9 +197,13 @@ class Play extends React.Component {
         { questions[currentIndex] !== undefined
           && (
             <div>
-              <p data-testid="question-category">{ questions[currentIndex].category}</p>
-              <p data-testid="question-text">{ questions[currentIndex].question }</p>
-              <div data-testid="answer-options">
+              <p data-testid="question-category" className='flex mx-2 my-2 bg-white transition duration-150 ease-in-out hover:bg-gray-100 hover:text-indigo-600 rounded border border-indigo-700 text-indigo-700 px-6 py-2 text-xl focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-indigo-700"'>
+                Tema -
+                {' '}
+                { questions[currentIndex].category}
+              </p>
+              <p data-testid="question-text" className="text-md flex mt-4 bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">{ questions[currentIndex].question }</p>
+              <div data-testid="answer-options" className=" bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded grid justify-items-center ">
                 { this.mountQuestions() }
               </div>
               { isAnswered
@@ -207,7 +213,7 @@ class Play extends React.Component {
                     data-testid="btn-next"
                     onClick={ () => this.changeQuestion(currentIndex) }
                   >
-                    Next
+                    <p className="ml-4 mt-4 flex m-auto bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">Próxima pergunta</p>
                   </button>
                 )}
             </div>
