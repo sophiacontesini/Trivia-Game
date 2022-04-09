@@ -1,0 +1,22 @@
+.cabecalho {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-family: monospace;
+    width: 100%;
+}
+
+.header-img {
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100px;
+  margin-top: 10px;
+  
+}
+
+.header-score {
+    font-size: 25px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    
+}

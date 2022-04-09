@@ -1,20 +1,27 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import '../css/timer.css';
 
 class Timer extends React.Component {
   render() {
     const { time } = this.props;
     return (
-      <p className="w-full flex relative items-center mx-auto px-2 h-20">
-        <p className="mr-2">Tempo restante:</p>
-        {' '}
-        <div className="mr-4">
+      <div className="">
+        <div className="mr-4 tempo">
+          {' '}
+
           {' '}
           { time }
         </div>
         <br />
-        <progress value={ time } max="30" />
-      </p>
+        <div><progress className="barra-tempo" value={ time } max="30" /></div>
+        <audio autoPlay>
+          <track default kind="captions" />
+          {' '}
+          <source s srcLang="en" rc="horse.ogg" type="audio/ogg" />
+          {' '}
+        </audio>
+      </div>
     );
   }
 }

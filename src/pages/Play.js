@@ -2,13 +2,12 @@ import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import '../assets/css/play.css';
 import {
-  getTokenAction, resetScoreboardAction,
-  updateScoreboardAction
+  getTokenAction, resetScoreboardAction, updateScoreboardAction
 } from '../redux/actions';
 import Header from './components/Header';
 import Timer from './components/Timer';
+import './css/play.css';
 
 const ZERO = 0;
 const ONE = 1;
@@ -129,7 +128,12 @@ class Play extends React.Component {
         }
         onClick={ isTheCorrect === WRONG_ANSWER ? this.wrongAnswer : this.rightAnswer }
       >
-        { answer }
+        <p
+          className="bg-white alternativa hover:bg-gray-400 text-gray-800 font-semibold
+         py-2 px-4 border border-gray-400 rounded shadow"
+        >
+          { answer }
+        </p>
       </button>
     ));
 
@@ -191,39 +195,31 @@ class Play extends React.Component {
     const { questions, currentIndex, timer: { time }, isAnswered } = this.state;
     return (
       <div className="bg">
-        <Header />
         <Timer time={ time } />
+
+        <Header />
         { questions[currentIndex] !== undefined
           && (
-            <div>
-              <p
-                data-testid="question-category"
-                className="flex mx-2 my-2 bg-white transition duration-150
-                 ease-in-out hover:bg-gray-100 hover:text-indigo-600 rounded border
-                  border-indigo-700 text-indigo-700 px-6 py-2 text-xl focus:ring-2
-                   focus:ring-offset-2  focus:outline-none focus:ring-indigo-700"
-              >
-                Tema -
-                { questions[currentIndex].category}
-              </p>
-              <p
-                data-testid="question-text"
-                className="text-md flex mt-4 bg-transparent hover:bg-green-500
-                text-green-700 font-semibold
-                hover:text-white py-2 px-4 border border-blue-500
-                 hover:border-transparent rounded"
-              >
-                { questions[currentIndex].question }
+            <div className="question-form">
+              <div className="category-and-question">
+                <p data-testid="question-category" className="categoria">
+                  { questions[currentIndex].category}
+                </p>
+                <div>
+                  <p
+                    data-testid="question-text"
+                    className="actual-question rounded shadow-md"
+                  >
+                    { questions[currentIndex].question }
 
-              </p>
-              <div
-                data-testid="answer-options"
-                className=" bg-transparent hover:bg-blue-500
-                text-blue-700 font-semibold hover:text-white py-2 px-4 border
-                border-blue-500 hover:border-transparent rounded grid
-                justify-items-center "
-              >
-                { this.mountQuestions() }
+                  </p>
+                </div>
+                <div
+                  data-testid="answer-options"
+                  className=" teste text-white font-bold rounded"
+                >
+                  { this.mountQuestions() }
+                </div>
               </div>
               { isAnswered
                 && (

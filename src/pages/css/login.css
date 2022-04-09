@@ -1,0 +1,33 @@
+.login {
+    background: url('https://cdn-www.bluestacks.com/bs-images/trivia-crack-2_banner.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.form {
+margin-top: 330px;
+
+}
+
+.formulario {
+  box-shadow: 0 0 0.4em rgb(203, 203, 203);
+  border-radius: 05%;
+  text-align: center;
+  background-color: rgb(16, 192, 139);
+  margin-top: -150px;
+}
+
+.config-button {
+  color: rgb(26, 103, 180);
+  margin-bottom: 5px;
+}
+
+.name-input {
+  margin-left: -15px;
+}
+
+.email-input {
+  margin-left: -15px;
+}

@@ -1,0 +1,11 @@
+.tempo {
+    width: 100%;
+    visibility: hidden ;
+}
+
+.barra-tempo {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    color: blue;
+}

@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import '../assets/css/login.css';
 import { getTokenAction, makeLoginAction } from '../redux/actions';
+import './css/login.css';
 
 class Login extends React.Component {
   constructor() {
@@ -44,21 +44,22 @@ class Login extends React.Component {
      const { buttonDisabled, name, email } = this.state;
      return (
        <div
-         className="login flex justify-center items-center h-screen mt-42 text-white   "
+         className="login flex justify-center items-center h-screen  text-white   "
        >
-         <div className="flex   justify-between bg-teal-600 p-6">
+         <div className="flex form justify-between bg-teal-600 p-6">
            <form
              onSubmit={ this.login }
-             className="bg-green-100 opacity-90 flex-row rounded"
+             className="bg-green-200 formulario  opacity-90 flex-row rounded"
            >
              <label
                htmlFor="name"
-               className="ml-4 block text-gray-700 justify-center text-lg  mb-2"
+               className="ml-4 text-white block mt-2 font-bold
+                justify-center text-lg  mb-2"
              >
-               Nome do Jogador:
+               Nome:
                <input
-                 className="shadow appearance-none border rounded
-                 w-full py-2 px-3 mt-2 text-gray-700 leading-tight focus:outline-none
+                 className="shadow name-input border rounded
+                 w-full py-2 px-3 mt-2 text-gray-900 leading-tight focus:outline-none
                   focus:shadow-outline"
                  type="text"
                  id="name"
@@ -70,13 +71,14 @@ class Login extends React.Component {
              </label>
              <label
                htmlFor="email"
-               className="text-gray-700 ml-4 text-lg justify-center  "
+               className="ml-4 block font-bold
+               text-white justify-center text-lg  mb-2 "
              >
                Email:
                <input
-                 className="shadow appearance-none border rounded w-full py-2
-                 px-3 mt-2 text-gray-700 leading-tight focus:outline-none
-                  focus:shadow-outline"
+                 className="shadow email-input appearance-none border rounded w-full py-2
+                  mt-2 text-gray-700 leading-tight focus:outline-none
+                  focus:shadow-outline mr-0"
                  type="email"
                  id="email"
                  name="email"
@@ -87,7 +89,7 @@ class Login extends React.Component {
              </label>
              <div className="flex justify-center">
                <button
-                 className='bg-green-500 hover:bg-green-700 my-4
+                 className='bg-green-600 hover:bg-green-800 my-4
                  text-white font-bold
                  py-2 px-4 rounded focus:outline-none focus:shadow-outline"'
                  type="submit"
@@ -100,7 +102,7 @@ class Login extends React.Component {
              </div>
              <Link to="/config">
                <button
-                 className="text-blue-700"
+                 className="config-button"
                  type="button"
                  data-testid="btn-settings"
                >

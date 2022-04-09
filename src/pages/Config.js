@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { updateConfigAction } from '../redux/actions';
+import './css/config.css';
 
 class Config extends React.Component {
   constructor() {
@@ -84,7 +85,7 @@ class Config extends React.Component {
   render() {
     const { categories, difficulties, types } = this.state;
     return (
-      <div>
+      <div className="config">
         <h1 className="title-config" data-testid="settings-title">
           Configurações
         </h1>
