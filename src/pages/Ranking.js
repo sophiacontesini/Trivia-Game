@@ -21,11 +21,11 @@ class Ranking extends Component {
     const { players } = this.state;
     return (
       <div className="ranking">
-        <h1 data-testid="ranking-title">Ranking</h1>
+        <h1 data-testid="ranking-title" className="ranking-title">Ranking</h1>
         <ul className="ranking-list">
           { players.map(({ name, score, picture }, index) => (
-            <li key={ index }>
-              <img src={ picture } alt="Imagem do usuário" />
+            <li key={ index } className="ranking-item">
+              <img src={ picture } alt="Imagem do usuário" className="player_image" />
               <p data-testid={ `player-name-${index}` }>{ name }</p>
               <p data-testid={ `player-score-${index}` }>{ score }</p>
             </li>
@@ -46,9 +46,5 @@ class Ranking extends Component {
     );
   }
 }
-
-// const mapStateToProps = (state) => ({});
-
-// const mapDispatchToProps = {};
 
 export default connect()(Ranking);

@@ -1,22 +1,49 @@
 .ranking {
-    display: flex;
-  flex-direction: column;
   align-items: center;
   background-color: rgb(16, 192, 139);
-  height: 768px;
-  position: absolute;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
   font-size: 22px;
+  height: 100vw;
 }
 
 .ranking-list {
-    margin-top: 20px;
-    margin-left: 22px;
+  background-color: rgb(229, 226, 226);
+  border-radius: 10px;
+  box-shadow: 0 0 0.4em rgb(16, 48, 192);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px;
+  width: 40%;
+}
+
+.ranking-title {
+  margin: 30px;
+}
+
+.ranking-item {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.player_image {
+  border-radius: 50px;
+  box-shadow: 0 0 0.4em rgb(16, 48, 192);
+  margin-right: 15px;
+  width: 70px;
+}
+
+.player-name {
+  margin-right: 20px;
 }
 
 .home {
-    position: absolute;
-    bottom: 5%;
-    left: 47%;
-    color: white;
+  bottom: 5%;
+  color: white;
+  left: 47%;
+  margin-top: 50px;
 }

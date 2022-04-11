@@ -1,55 +1,50 @@
 .feedback {
-    display: flex;
-  flex-direction: column;
   align-items: center;
   background-color: rgb(16, 192, 139);
-  height: 560px;
-  position: absolute;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
   font-size: 22px;
-  text-align: center;
+  height: 560px;
   overflow: visible;
-
-  
+  position: absolute;
+  text-align: center;
+  width: 100%;
 }
 
-.feedback-text {
-    
-}
 .feedback-assertions-score {
-    margin-top: 100px;
-    background-color: rgb(3, 10, 59);
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-    opacity: 0.95;
-    border-radius: 10px;
-    box-shadow: inset 0 0 1em rgb(84, 1, 156);
-    width: 500px;
-    color: white;
-    margin-left: 40px;
+  align-items: center;
+  background-color: rgb(3, 10, 59);
+  border-radius: 10px;
+  box-shadow: inset 0 0 1em rgb(84, 1, 156);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  margin-left: 40px;
+  margin-top: 100px;
+  opacity: 0.95;
+  text-align: center;
+  width: 500px;
 }
 
 .btn-ranking {
-    text-decoration: underline;
-    color: rgb(21, 11, 198);
-    display: flex;
-    text-align: center;    
-    position: absolute;
-    bottom: 7%;
-    left: 49%;
-    font-size: 20px;
-
+  bottom: 7%;
+  color: rgb(21, 11, 198);
+  display: flex;
+  font-size: 20px;
+  left: 49%;
+  position: absolute;
+  text-align: center;
+  text-decoration: underline;
 }
 
 .feedback-color {
-    background-color:rgb(16, 192, 139);
+  background-color: rgb(16, 192, 139);
 }
 
 .btn-play-again {
-    margin-left: 50px;
+  margin-left: 50px;
 }
 
 .cabecalho {
-padding-top: 40px;}
+  padding-top: 40px;
+}
