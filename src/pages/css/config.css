@@ -1,17 +1,32 @@
 .config {
-    display: flex;
-  flex-direction: column;
   align-items: center;
   background-color: rgb(16, 192, 139);
-  height: 768px;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  height: 100vh;
+  justify-content: center;
   position: absolute;
   width: 100%;
-  font-size: 20px;
+}
+
+.form-container {
+  background-color: rgb(75, 216, 174);
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.save-button {
+  background-color: rgb(75, 255, 47);
+  border-radius: 10px;
+  margin-left: 330px;
+  padding: 0 10px;
+  position: relative;
 }
 
 .login-page {
-    position: fixed;
-    bottom: 10%;
-    text-decoration: underline;
-    color: rgb(21, 11, 198);
+  bottom: 10%;
+  color: rgb(21, 11, 198);
+  position: fixed;
+  text-decoration: underline;
 }
