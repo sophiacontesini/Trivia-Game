@@ -1,13 +1,14 @@
 .bg {
   background: url('https://cdn-www.bluestacks.com/bs-images/trivia-crack-2_banner.jpg') no-repeat center center fixed;
   background-size: cover;
+  height: 100vh;
 }
 
 .question-form {
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 768px;
+  justify-content: center;
   margin-top: 0;
   width: 100%;
 }
@@ -72,7 +73,6 @@
 } */
 
 .cabecalho {
-  margin-right: 60px;
   margin-top: -031px;
   opacity: 1;
   padding-bottom: 10px;
@@ -81,10 +81,13 @@
 
 .correct-answer {
   align-items: center;
-  background-color: rgb(54, 196, 68) '!important';
+  background-color: rgb(54, 196, 68);
   border: 3px solid rgb(6, 240, 15);
+  border-radius: 5%;
   display: flex;
   flex-direction: column;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .wrong-answer {
@@ -96,5 +99,4 @@
   flex-direction: column;
   margin-bottom: 5px;
   margin-top: 5px;
-  z-index: 2005555555;
 }

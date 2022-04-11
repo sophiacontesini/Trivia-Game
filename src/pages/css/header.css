@@ -1,28 +1,22 @@
 .cabecalho {
+  align-items: center;
   display: flex;
   flex-direction: column;
   font-family: monospace;
+  justify-content: center;
   margin-left: 0%;
   text-align: center;
   width: 100%;
 }
 
-.header-img {
-  display: block;
-  margin: 10px auto 10px 50%;
-  width: 100px;
-}
-
 .header-player-name {
   font-size: 22px;
-  margin-left: 45%;
   margin-top: 5px;
   width: 220px;
 }
 
 .header-score {
   font-size: 22px;
-  margin-left: 45%;
   margin-top: 5px;
   width: 220px;
 }
