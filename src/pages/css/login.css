@@ -1,27 +1,24 @@
 .login {
-    background: url('https://cdn-www.bluestacks.com/bs-images/trivia-crack-2_banner.jpg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+  background: url('https://cdn-www.bluestacks.com/bs-images/trivia-crack-2_banner.jpg') no-repeat center center fixed;
   background-size: cover;
 }
 
 .form {
-margin-top: 330px;
-
+  margin-top: 330px;
 }
 
 .formulario {
-  box-shadow: 0 0 0.4em rgb(203, 203, 203);
-  border-radius: 05%;
-  text-align: center;
   background-color: rgb(16, 192, 139);
+  border-radius: 05%;
+  box-shadow: 0 0 0.4em rgb(203, 203, 203);
   margin-top: -150px;
+  text-align: center;
 }
 
 .config-button {
   color: rgb(26, 103, 180);
   margin-bottom: 5px;
+  text-decoration: underline;
 }
 
 .name-input {
@@ -30,10 +27,4 @@ margin-top: 330px;
 
 .email-input {
   margin-left: -15px;
-}
-
-.config-button {
-
-  color: rgb(18, 48, 214);
-  text-decoration: underline;
 }

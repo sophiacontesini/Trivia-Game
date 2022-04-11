@@ -4,12 +4,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import he from 'he';
 import {
-  getTokenAction, resetScoreboardAction, updateScoreboardAction
+  getTokenAction, resetScoreboardAction, updateScoreboardAction,
 } from '../redux/actions';
 import Header from './components/Header';
 import Timer from './components/Timer';
 import './css/header.css';
 import './css/play.css';
+import Button from './components/Button';
+import Questions from './components/Questions';
 
 const ZERO = 0;
 const ONE = 1;
@@ -29,18 +31,13 @@ class Play extends React.Component {
       alternatives: [],
       currentIndex: 0,
       isAnswered: false,
-      timer: {
-        id: 0,
-        time: 0,
-      },
+      timer: { id: 0, time: 0 },
     };
   }
 
   componentDidMount = async () => {
     const { name, history } = this.props;
-    if (!name) {
-      history.push('/');
-    }
+    if (!name) history.push('/');
     const { token, updateToken, resetScoreboard, config } = this.props;
     const { category, difficulty, type } = config;
     try {
@@ -49,9 +46,7 @@ class Play extends React.Component {
       + (type ? `&type=${type}` : '');
       const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token + parameters}`);
       const result = await response.json();
-      if (result.response_code === THREE) {
-        updateToken();
-      }
+      if (result.response_code === THREE) updateToken();
       this.setState({
         questions: result.results,
         currentIndex: 0,
@@ -200,52 +195,21 @@ class Play extends React.Component {
     return (
       <div className="bg">
         <Timer time={ time } />
-
         { questions[currentIndex] !== undefined
           && (
             <div className="question-form">
               <Header />
-
-              <div className="category-and-question">
-                <p data-testid="question-category" className="categoria">
-                  { questions[currentIndex].category}
-                </p>
-                <div>
-                  <p
-                    data-testid="question-text"
-                    className="actual-question rounded shadow-md"
-                  >
-                    { he.decode(questions[currentIndex].question) }
-
-                  </p>
-                </div>
-                <audio id="play" autoPlay>
-                  <track kind="captions" />
-                  <source src={ require('./css/quizz.mp3') } type="audio/mp3" />
-
-                </audio>
-
-                <div
-                  data-testid="answer-options"
-                  className=" teste font-bold rounded "
-                >
-                  { this.mountQuestions() }
-                </div>
-              </div>
+              <Questions
+                questions={ questions }
+                currentIndex={ currentIndex }
+                mountQuestions={ this.mountQuestions }
+              />
               { isAnswered
                 && (
-                  <button
-                    type="button"
-                    data-testid="btn-next"
-                    onClick={ () => this.changeQuestion(currentIndex) }
-                  >
-                    <p
-                      className="ml-4 mt-4 flex m-auto bg-blue-400 hover:bg-blue-600
-                     text-gray-800 font-bold py-2 px-4 rounded"
-                    >
-                      Próxima pergunta
-                    </p>
-                  </button>
+                  <Button
+                    changeQuestion={ this.changeQuestion }
+                    currentIndex={ currentIndex }
+                  />
                 )}
             </div>
           )}
