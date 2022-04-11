@@ -8,3 +8,10 @@
   width: 100%;
   font-size: 20px;
 }
+
+.login-page {
+    position: fixed;
+    bottom: 10%;
+    text-decoration: underline;
+    color: rgb(21, 11, 198);
+}

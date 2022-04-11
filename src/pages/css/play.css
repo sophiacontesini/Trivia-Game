@@ -7,16 +7,14 @@ background-size: cover;
 
 }
 
-.homer-image {
-  background-image: url('https://blog.influx.com.br/storage/app/uploads/public/688/c7f/362/688c7f3627176ab5203d15de880efc37f0a9f6c1.png');
-}
 .question-form {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-top: 140px;
-  height: 485px;
+  margin-top: 0px;
+  height: 499px;
+  
 
 
   
@@ -39,12 +37,14 @@ background-size: cover;
 
 }
 .correct-answer {
-  border: 3px solid rgb(6, 240, 15);
+  border: 0.01px solid rgb(6, 240, 15);
+
   
 }
 
 .wrong-answer {
-  border: 3px solid red;
+  border: 0.01px solid red;
+  z-index: 200;
 }
 
 .teste {
@@ -55,6 +55,7 @@ background-size: cover;
   margin-top: 15px;
   padding-top: 5px;
   padding-bottom: 15px;
+  
 
 }
 
@@ -71,6 +72,7 @@ background-size: cover;
 
 .alternativa {
   margin-top: 5px;
+
 }
 
 .categoria {
@@ -85,3 +87,11 @@ background-size: cover;
   background-size: contain;
   background-repeat: no-repeat;
 } */
+
+.cabecalho {
+  margin-top: -031px;
+  padding-bottom: 10px;
+  opacity: 1;
+
+}
+

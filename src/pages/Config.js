@@ -1,8 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { updateConfigAction } from '../redux/actions';
-import './css/config.css';
+import './css/ranking.css';
 
 class Config extends React.Component {
   constructor() {
@@ -97,6 +98,16 @@ class Config extends React.Component {
           </div>
           <button type="submit">Salvar</button>
         </form>
+        <Link to="/">
+          <button
+            className="login-page"
+            type="button"
+            data-testid="btn-settings"
+          >
+            {' '}
+            Login
+          </button>
+        </Link>
       </div>
     );
   }

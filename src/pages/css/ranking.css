@@ -1,0 +1,22 @@
+.ranking {
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(16, 192, 139);
+  height: 768px;
+  position: absolute;
+  width: 100%;
+  font-size: 22px;
+}
+
+.ranking-list {
+    margin-top: 20px;
+    margin-left: 22px;
+}
+
+.home {
+    position: absolute;
+    bottom: 5%;
+    left: 47%;
+    color: white;
+}

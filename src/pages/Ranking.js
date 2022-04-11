@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import './css/ranking.css';
 
 class Ranking extends Component {
   constructor() {
@@ -19,9 +20,9 @@ class Ranking extends Component {
   render() {
     const { players } = this.state;
     return (
-      <div>
+      <div className="ranking">
         <h1 data-testid="ranking-title">Ranking</h1>
-        <ul>
+        <ul className="ranking-list">
           { players.map(({ name, score, picture }, index) => (
             <li key={ index }>
               <img src={ picture } alt="Imagem do usuário" />
@@ -31,7 +32,15 @@ class Ranking extends Component {
           )) }
         </ul>
         <Link to="/">
-          <button type="button" data-testid="btn-go-home">Home</button>
+          <button
+            type="button"
+            data-testid="btn-go-home"
+            className="bg-blue-500 hover:bg-blue-6g00 text-gray-800
+          font-semibold py-2 px-4 home rounded shadow"
+          >
+            Home
+
+          </button>
         </Link>
       </div>
     );

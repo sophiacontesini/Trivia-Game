@@ -7,6 +7,7 @@ import {
 } from '../redux/actions';
 import Header from './components/Header';
 import Timer from './components/Timer';
+import './css/header.css';
 import './css/play.css';
 
 const ZERO = 0;
@@ -214,6 +215,12 @@ class Play extends React.Component {
 
                   </p>
                 </div>
+                <audio id="play" autoPlay>
+                  <track kind="captions" />
+                  <source src={ require('./css/quizz.mp3') } type="audio/mp3" />
+
+                </audio>
+
                 <div
                   data-testid="answer-options"
                   className=" teste text-white font-bold rounded"
@@ -229,11 +236,10 @@ class Play extends React.Component {
                     onClick={ () => this.changeQuestion(currentIndex) }
                   >
                     <p
-                      className="ml-4 mt-4 flex m-auto bg-gray-300 hover:bg-gray-400
-                     text-gray-800 font-bold py-2 px-4 rounded-r"
+                      className="ml-4 mt-4 flex m-auto bg-blue-400 hover:bg-blue-600
+                     text-gray-800 font-bold py-2 px-4 rounded"
                     >
                       Próxima pergunta
-
                     </p>
                   </button>
                 )}
