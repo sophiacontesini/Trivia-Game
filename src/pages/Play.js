@@ -2,6 +2,7 @@ import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import he from 'he';
 import {
   getTokenAction, resetScoreboardAction, updateScoreboardAction
 } from '../redux/actions';
@@ -134,7 +135,7 @@ class Play extends React.Component {
              rounded "
         >
           <p className="testando">
-            { answer }
+            { he.decode(answer) }
           </p>
         </p>
       </button>
@@ -214,7 +215,7 @@ class Play extends React.Component {
                     data-testid="question-text"
                     className="actual-question rounded shadow-md"
                   >
-                    { questions[currentIndex].question }
+                    { he.decode(questions[currentIndex].question) }
 
                   </p>
                 </div>
