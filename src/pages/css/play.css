@@ -14,7 +14,7 @@
 }
 
 .question-form button {
-  background-color: rgba(240, 255, 255, 0.479); 
+  background-color: rgba(197, 247, 247, 0.479); 
   border-radius: 10px;
   margin: 5px 0;
   vertical-align: middle;
@@ -61,7 +61,7 @@
 
 .alternativa {
   color: white;
-  margin-top: 15px;
+  padding: 10px 0;
   padding-left: 5px;
   padding-right: 5px;
 }
