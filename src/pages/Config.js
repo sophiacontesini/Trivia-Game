@@ -97,7 +97,7 @@ class Config extends React.Component {
             { this.mountConfig('Dificuldade', 'difficulty-select', difficulties) }
             { this.mountConfig('Tipo', 'type-select', types) }
           </div>
-          <button type="submit">Salvar</button>
+          <button className="save-button" type="submit">Salvar</button>
         </form>
         <Link to="/">
           <button
@@ -105,8 +105,7 @@ class Config extends React.Component {
             type="button"
             data-testid="btn-settings"
           >
-            {' '}
-            Login
+            Home
           </button>
         </Link>
       </div>
