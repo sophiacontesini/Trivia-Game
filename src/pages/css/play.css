@@ -13,6 +13,14 @@
   width: 100%;
 }
 
+.question-form button {
+  background-color: rgba(240, 255, 255, 0.479); 
+  border-radius: 10px;
+  margin: 5px 0;
+  vertical-align: middle;
+  width: 200px;
+}
+
 .question-category {
   color: rgb(53, 234, 180);
   font-size: 20px;
