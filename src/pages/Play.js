@@ -130,10 +130,12 @@ class Play extends React.Component {
         onClick={ isTheCorrect === WRONG_ANSWER ? this.wrongAnswer : this.rightAnswer }
       >
         <p
-          className="bg-white alternativa hover:bg-gray-400 text-gray-800 font-semibold
-         py-2 px-4 border border-gray-400 rounded shadow"
+          className=" alternativa  text-gray-800 font-semibold
+             rounded "
         >
-          { answer }
+          <p className="testando">
+            { answer }
+          </p>
         </p>
       </button>
     ));
@@ -198,10 +200,11 @@ class Play extends React.Component {
       <div className="bg">
         <Timer time={ time } />
 
-        <Header />
         { questions[currentIndex] !== undefined
           && (
             <div className="question-form">
+              <Header />
+
               <div className="category-and-question">
                 <p data-testid="question-category" className="categoria">
                   { questions[currentIndex].category}
@@ -223,7 +226,7 @@ class Play extends React.Component {
 
                 <div
                   data-testid="answer-options"
-                  className=" teste text-white font-bold rounded"
+                  className=" teste font-bold rounded "
                 >
                   { this.mountQuestions() }
                 </div>

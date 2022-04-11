@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { updateConfigAction } from '../redux/actions';
 import './css/ranking.css';
+import './css/config.css';
 
 class Config extends React.Component {
   constructor() {

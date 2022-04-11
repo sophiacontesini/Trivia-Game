@@ -31,3 +31,9 @@ margin-top: 330px;
 .email-input {
   margin-left: -15px;
 }
+
+.config-button {
+
+  color: rgb(18, 48, 214);
+  text-decoration: underline;
+}
